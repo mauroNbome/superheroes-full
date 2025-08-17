@@ -1,6 +1,6 @@
 /**
  * Configuración de variables de entorno generada por Docker (Desarrollo)
- * Generado automáticamente en: Sat Aug 16 22:18:21 UTC 2025
+ * Generado automáticamente en: Sun Aug 17 16:21:43 UTC 2025
  */
 
 (function(window) {
@@ -14,7 +14,7 @@
   
   // Información adicional
   window.__env.version = '1.0.0-dev';
-  window.__env.buildDate = '2025-08-16T22:18:21Z';
+  window.__env.buildDate = '2025-08-17T16:21:43Z';
 
   console.log('🔧 Variables de entorno cargadas (desarrollo):', window.__env);
 })(this);
