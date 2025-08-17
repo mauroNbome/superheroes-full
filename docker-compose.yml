@@ -1,0 +1,102 @@
+version: '3.8'
+
+# Configuración de servicios para Superheroes Full Stack App
+services:
+  # ========================================
+  # BASE DE DATOS - PostgreSQL
+  # ========================================
+  database:
+    image: postgres:15-alpine
+    container_name: superheroes-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: superheroes
+      POSTGRES_USER: superuser
+      POSTGRES_PASSWORD: superpass123
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      # Persistir datos fuera del contenedor
+      - postgres_data:/var/lib/postgresql/data
+      # Scripts de inicialización (opcional)
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - superheroes-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U superuser -d superheroes"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ========================================
+  # BACKEND - API NestJS
+  # ========================================
+  backend:
+    build:
+      context: ./superheroes-back
+      dockerfile: Dockerfile
+    container_name: superheroes-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      # Variables de entorno para la aplicación
+      NODE_ENV: production
+      PORT: 3000
+      # Configuración de base de datos
+      DB_TYPE: postgres
+      DB_HOST: database  # Nombre del servicio de BD
+      DB_PORT: 5432
+      DB_USERNAME: superuser
+      DB_PASSWORD: superpass123
+      DB_DATABASE: superheroes
+      # CORS - Permitir frontend desde Docker y localhost
+      CORS_ORIGIN: "http://localhost:4200,http://frontend:80"
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - superheroes-network
+    volumes:
+      # Para desarrollo: hot reload
+      - ./superheroes-back/src:/app/src
+      - ./superheroes-back/dist:/app/dist
+
+  # ========================================
+  # FRONTEND - Aplicación Angular
+  # ========================================
+  frontend:
+    build:
+      context: ./superheroes-app
+      dockerfile: Dockerfile
+    container_name: superheroes-frontend
+    restart: unless-stopped
+    ports:
+      - "4200:80"  # Angular sirve en puerto 80 dentro del contenedor
+    environment:
+      # En Docker, usa el nombre del servicio backend
+      API_URL: http://backend:3000
+      # Variable para indicar que está en producción Docker
+      DOCKER_ENV: "true"
+      NODE_ENV: production
+    depends_on:
+      - backend
+    networks:
+      - superheroes-network
+
+# ========================================
+# VOLÚMENES PERSISTENTES
+# ========================================
+volumes:
+  postgres_data:
+    driver: local
+    # Los datos de PostgreSQL se mantienen aunque se eliminen los contenedores
+
+# ========================================
+# RED INTERNA
+# ========================================
+networks:
+  superheroes-network:
+    driver: bridge
+    # Permite comunicación entre contenedores

@@ -1,0 +1,635 @@
+/* ============================================================================
+   HERO FORM COMPONENT STYLES - Material Design theming
+   ============================================================================ */
+
+/* Dialog Container */
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-primary);
+}
+
+.dialog-title {
+  margin: 0;
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.close-button {
+  margin-left: auto;
+  color: var(--text-secondary);
+}
+
+.close-button:hover {
+  color: var(--text-primary);
+  background: var(--bg-black-overlay);
+}
+
+.dialog-content {
+  padding: var(--spacing-lg);
+  max-height: 70vh;
+  overflow-y: auto;
+  background: var(--surface-color);
+}
+
+.hero-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* ============================================================================
+   POWERS SECTION - Chip-based power management with enhanced contrast
+   ============================================================================ */
+.powers-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-md) 0;
+}
+
+.powers-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+  letter-spacing: 0.25px;
+}
+
+.powers-chips-container {
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  background: var(--background-light);
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.powers-chips-container mat-chip-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.powers-chips-container mat-chip {
+  background: var(--primary-color) !important;
+  color: var(--white) !important;
+  font-size: var(--font-size-xs) !important;
+  font-weight: var(--font-weight-medium) !important;
+  border-radius: var(--border-radius-lg) !important;
+  transition: var(--transition-hover) !important;
+}
+
+.powers-chips-container mat-chip:hover {
+  background: var(--primary-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.powers-chips-container mat-chip button[matChipRemove] {
+  color: var(--white) !important;
+  opacity: 0.8;
+}
+
+.powers-chips-container mat-chip button[matChipRemove]:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.powers-error {
+  color: var(--danger-color);
+  font-size: var(--font-size-xs);
+  margin-top: var(--spacing-xs);
+}
+
+/* ============================================================================
+   POWER LEVEL SECTION - Themed range slider with visual feedback
+   ============================================================================ */
+.power-level-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-md) 0;
+}
+
+.power-level-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+  letter-spacing: 0.25px;
+}
+
+.power-level-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  background: var(--background-light);
+  transition: var(--transition-hover);
+}
+
+.power-level-container:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Themed Range Slider */
+.power-level-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--border-radius-sm);
+  background: var(--border-color);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: var(--transition-hover);
+}
+
+.power-level-slider::-webkit-slider-track {
+  width: 100%;
+  height: 8px;
+  background: var(--border-color);
+  border-radius: var(--border-radius-sm);
+}
+
+.power-level-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--border-radius-full);
+  background: var(--primary-color);
+  cursor: pointer;
+  border: 2px solid var(--surface-color);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-hover);
+}
+
+.power-level-slider::-webkit-slider-thumb:hover {
+  background: var(--primary-hover);
+  transform: scale(1.1);
+  box-shadow: var(--shadow-button-hover);
+}
+
+.power-level-slider::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  background: var(--border-color);
+  border-radius: var(--border-radius-sm);
+  border: none;
+}
+
+.power-level-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--border-radius-full);
+  background: var(--primary-color);
+  cursor: pointer;
+  border: 2px solid var(--surface-color);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-hover);
+}
+
+.power-level-slider::-moz-range-thumb:hover {
+  background: var(--primary-hover);
+  transform: scale(1.1);
+}
+
+.power-level-display {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  justify-content: space-between;
+}
+
+.power-level-chip {
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+}
+
+.power-level-description {
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+  opacity: 0.85;
+}
+
+/* High-contrast text for power level badge in LIGHT MODE */
+.light-theme .power-level-chip {
+  /* Ensure label text is dark enough on light backgrounds */
+  --mdc-chip-label-text-color: var(--text-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Fallback for MDC internal label node */
+.light-theme ::ng-deep .power-level-chip .mdc-evolution-chip__text {
+  color: var(--text-primary) !important;
+}
+
+.power-level-error {
+  color: var(--danger-color);
+  font-size: var(--font-size-xs);
+  margin-top: var(--spacing-xs);
+}
+
+/* ============================================================================
+   FORM ELEMENTS - Toggle switches and other form controls
+   ============================================================================ */
+.form-row {
+  display: flex;
+  align-items: center; /* Alinear verticalmente el toggle con su etiqueta */
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-md);
+  background: var(--background-light);
+  border: 1px solid var(--border-light);
+}
+
+.status-toggle {
+  display: flex; /* Asegura que el switch y el label estén en la misma línea */
+  align-items: center; /* Centrado vertical perfecto */
+}
+
+.toggle-label {
+  display: flex; /* Icono + texto en una sola línea */
+  align-items: center; /* Centrado vertical del icono con el texto */
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.25px;
+}
+
+.toggle-icon {
+  font-size: 18px;
+  color: var(--text-primary);
+  opacity: 0.8;
+  line-height: 1; /* Evita desalineación vertical */
+  vertical-align: middle;
+}
+
+/* Ajustes finos del mat-slide-toggle interno para alinear eje X */
+::ng-deep .status-toggle .mdc-form-field {
+  display: inline-flex;
+  align-items: center;
+}
+::ng-deep .status-toggle .mdc-switch {
+  vertical-align: middle;
+}
+::ng-deep .status-toggle .mdc-label {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ============================================================================
+   EDIT INFO SECTION - Read-only metadata display
+   ============================================================================ */
+.edit-info {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-light);
+}
+
+.edit-info h4 {
+  margin: var(--spacing-md) 0 var(--spacing-sm) 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+  background: var(--background-light);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--border-light);
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.info-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+}
+
+.info-value {
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+/* ============================================================================
+   DIALOG ACTIONS - Themed action buttons
+   ============================================================================ */
+.dialog-actions {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+  background: var(--surface-color);
+}
+
+.actions-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+}
+
+.cancel-button,
+.action-button {
+  min-width: 100px;
+  font-weight: var(--font-weight-medium);
+}
+
+.cancel-button {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  background: transparent;
+  font-weight: var(--font-weight-medium);
+}
+
+.cancel-button:hover {
+  background: var(--background-light);
+  border-color: var(--primary-color);
+  color: var(--text-primary);
+}
+
+.action-button {
+  background: var(--primary-color);
+  color: var(--white);
+  border: none;
+  font-weight: var(--font-weight-semibold);
+  display: inline-flex; /* Alinear icono + texto */
+  align-items: center; /* Centrado vertical del contenido */
+  gap: var(--spacing-xs);
+}
+
+.action-button:hover {
+  background: var(--primary-hover);
+  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-1px);
+}
+
+.action-button:disabled {
+  background: var(--text-disabled);
+  color: var(--white);
+  opacity: 0.6;
+  transform: none;
+}
+
+.button-spinner {
+  margin-right: var(--spacing-sm);
+  vertical-align: middle; /* Centrado vertical cuando aparece */
+}
+
+/* Alinear icono dentro del botón con el texto */
+.action-button mat-icon {
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN - Mobile-friendly adaptations
+   ============================================================================ */
+@media (max-width: 600px) {
+  .dialog-content {
+    padding: var(--spacing-md);
+  }
+  
+  .dialog-header {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  .actions-container {
+    flex-direction: column-reverse;
+    gap: var(--spacing-sm);
+  }
+  
+  .cancel-button,
+  .action-button {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .power-level-display {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+}
+
+/* ============================================================================
+   MATERIAL DESIGN FORM FIELD OVERRIDES - Enhanced theming with perfect contrast
+   ============================================================================ */
+::ng-deep .hero-form .mat-mdc-form-field {
+  width: 100%;
+  /* Forzar alto contraste de tipografía en ambos modos usando variables del theme */
+  --mdc-filled-text-field-input-text-color: var(--text-primary) !important;
+  --mdc-outlined-text-field-input-text-color: var(--text-primary) !important;
+  --mdc-filled-text-field-caret-color: var(--primary-color) !important;
+  --mdc-outlined-text-field-caret-color: var(--primary-color) !important;
+  --mdc-filled-text-field-input-text-placeholder-color: var(--text-disabled) !important;
+  --mdc-outlined-text-field-input-text-placeholder-color: var(--text-disabled) !important;
+  --mdc-outlined-text-field-label-text-color: var(--text-secondary) !important;
+  --mdc-filled-text-field-label-text-color: var(--text-secondary) !important;
+}
+
+/* Form Field Background */
+::ng-deep .hero-form .mat-mdc-form-field .mdc-text-field {
+  background-color: var(--surface-color) !important; /* Respetar theme */
+  color: var(--text-primary) !important; /* Texto de alto contraste */
+}
+
+::ng-deep .hero-form .mat-mdc-form-field .mdc-text-field--filled {
+  background-color: var(--background-light) !important;
+}
+
+/* Border Colors */
+::ng-deep .hero-form .mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline {
+  border-color: var(--border-color) !important;
+}
+
+::ng-deep .hero-form .mat-mdc-form-field .mdc-text-field--outlined:hover .mdc-notched-outline {
+  border-color: var(--primary-color) !important;
+}
+
+::ng-deep .hero-form .mat-mdc-form-field .mdc-text-field--outlined.mdc-text-field--focused .mdc-notched-outline {
+  border-color: var(--primary-color) !important;
+  border-width: 2px !important;
+}
+
+/* Label Colors - High Contrast */
+::ng-deep .hero-form .mat-mdc-form-field .mdc-floating-label {
+  color: var(--text-secondary) !important;
+}
+
+::ng-deep .hero-form .mat-mdc-form-field .mdc-floating-label--float-above {
+  color: var(--primary-color) !important;
+  font-weight: var(--font-weight-medium) !important;
+}
+
+/* Input Text - Maximum Contrast */
+::ng-deep .hero-form .mat-mdc-text-field--filled .mdc-text-field__input,
+::ng-deep .hero-form .mat-mdc-text-field--outlined .mdc-text-field__input {
+  color: var(--text-primary) !important; /* Alto contraste en ambos temas */
+  font-weight: var(--font-weight-normal) !important;
+  caret-color: var(--primary-color) !important;
+}
+
+/* Placeholder Text */
+::ng-deep .hero-form .mat-mdc-text-field--filled .mdc-text-field__input::placeholder,
+::ng-deep .hero-form .mat-mdc-text-field--outlined .mdc-text-field__input::placeholder {
+  color: var(--text-disabled) !important;
+  opacity: 1 !important;
+}
+
+/* Textarea Specific */
+::ng-deep .hero-form .mat-mdc-form-field textarea.mdc-text-field__input {
+  color: var(--text-primary) !important;
+  font-family: inherit !important;
+  line-height: var(--line-height-relaxed) !important;
+}
+
+/* Hint Text */
+::ng-deep .hero-form .mat-mdc-form-field-hint {
+  color: var(--text-secondary) !important;
+  font-size: var(--font-size-xs) !important;
+}
+
+/* Error Text */
+::ng-deep .hero-form .mat-mdc-form-field-error {
+  color: var(--danger-color) !important;
+  font-weight: var(--font-weight-medium) !important;
+  font-size: var(--font-size-xs) !important;
+}
+
+/* Suffix Icons */
+::ng-deep .hero-form .mat-mdc-form-field .mat-mdc-form-field-icon-suffix mat-icon {
+  color: var(--text-secondary) !important;
+}
+
+::ng-deep .hero-form .mat-mdc-form-field.mat-focused .mat-mdc-form-field-icon-suffix mat-icon {
+  color: var(--primary-color) !important;
+}
+
+/* Character Counter */
+::ng-deep .hero-form .mat-mdc-form-field-hint-end {
+  color: var(--text-disabled) !important;
+  font-size: var(--font-size-xs) !important;
+}
+
+/* ============================================================================
+   MATERIAL COMPONENTS OVERRIDES - Additional theming for specific components
+   ============================================================================ */
+
+/* Slide Toggle Theming */
+::ng-deep .hero-form .mat-mdc-slide-toggle {
+  --mdc-switch-selected-track-color: var(--primary-color) !important;
+  --mdc-switch-selected-handle-color: var(--white) !important;
+  --mdc-switch-unselected-track-color: var(--border-color) !important;
+  --mdc-switch-unselected-handle-color: var(--text-disabled) !important;
+}
+
+::ng-deep .hero-form .mat-mdc-slide-toggle .mdc-switch__track {
+  border-color: var(--border-color) !important;
+}
+
+::ng-deep .hero-form .mat-mdc-slide-toggle .mdc-label {
+  color: var(--text-primary) !important;
+}
+
+/* Chips Enhanced Theming */
+::ng-deep .hero-form mat-chip {
+  --mdc-chip-label-text-color: var(--white) !important;
+  --mdc-chip-selected-container-color: var(--primary-color) !important;
+  --mdc-chip-unselected-container-color: var(--primary-color) !important;
+  --mdc-chip-with-trailing-icon-trailing-icon-color: var(--white) !important;
+  font-weight: var(--font-weight-medium) !important;
+}
+
+/* Divider Theming */
+::ng-deep .hero-form mat-divider {
+  border-top-color: var(--border-light) !important;
+}
+
+/* Error Styling Enhancement */
+::ng-deep .hero-form .powers-error .mat-mdc-form-field-error,
+::ng-deep .hero-form .power-level-error .mat-mdc-form-field-error {
+  display: block !important;
+  color: var(--danger-color) !important;
+  font-weight: var(--font-weight-medium) !important;
+  font-size: var(--font-size-xs) !important;
+  margin-top: var(--spacing-xs) !important;
+}
+
+/* Dialog Button Overrides */
+::ng-deep .hero-form .mat-mdc-dialog-actions .mat-mdc-button {
+  color: var(--text-primary) !important;
+}
+
+::ng-deep .hero-form .mat-mdc-dialog-actions .mat-mdc-raised-button {
+  --mdc-filled-button-container-color: var(--primary-color) !important;
+  --mdc-filled-button-label-text-color: var(--white) !important;
+}
+
+::ng-deep .hero-form .mat-mdc-dialog-actions .mat-mdc-outlined-button {
+  --mdc-outlined-button-outline-color: var(--border-color) !important;
+  --mdc-outlined-button-label-text-color: var(--text-primary) !important;
+}
+
+::ng-deep .hero-form .mat-mdc-dialog-actions .mat-mdc-outlined-button:hover {
+  --mdc-outlined-button-outline-color: var(--primary-color) !important;
+  background: var(--background-light) !important;
+}
+
+/* Enhanced Input Focus States */
+::ng-deep .hero-form .mat-mdc-form-field.mat-focused .mdc-text-field--outlined .mdc-notched-outline__leading,
+::ng-deep .hero-form .mat-mdc-form-field.mat-focused .mdc-text-field--outlined .mdc-notched-outline__notch,
+::ng-deep .hero-form .mat-mdc-form-field.mat-focused .mdc-text-field--outlined .mdc-notched-outline__trailing {
+  border-color: var(--primary-color) !important;
+  border-width: 2px !important;
+}
+
+/* Dialog Title Enhancement */
+::ng-deep .hero-form .mat-mdc-dialog-title {
+  color: var(--text-primary) !important;
+  font-weight: var(--font-weight-semibold) !important;
+}
+
+/* ============================================================================
+   SMOOTH THEME TRANSITIONS - Enhanced user experience
+   ============================================================================ */
+* {
+  transition: background-color var(--transition-normal) var(--ease-out),
+              border-color var(--transition-normal) var(--ease-out),
+              color var(--transition-normal) var(--ease-out),
+              box-shadow var(--transition-normal) var(--ease-out);
+}

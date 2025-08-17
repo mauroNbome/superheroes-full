@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: superheroes-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: superheroes-app/package-lock.json
+      - name: Install Chromium
+        run: sudo apt-get update && sudo apt-get install -y chromium-browser
+      - name: Install deps
+        run: npm ci
+      - name: Run tests (headless)
+        env:
+          CHROME_BIN: /usr/bin/chromium-browser
+          CI: true
+        run: npm test -- --watch=false --browsers=ChromeHeadlessCI
+      - name: Build
+        run: npm run build
+
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: superheroes-back
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: superheroes-back/package-lock.json
+      - name: Install deps
+        run: npm ci
+      - name: Run unit tests (src + test)
+        run: npm run test:all
+      - name: Run e2e tests (SQLite in-memory)
+        env:
+          NODE_ENV: test
+          DB_TYPE: sqlite
+          DB_DATABASE: ':memory:'
+        run: npm run test:e2e
+
+

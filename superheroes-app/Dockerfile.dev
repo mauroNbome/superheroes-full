@@ -1,0 +1,37 @@
+# ========================================
+# DOCKERFILE PARA ANGULAR - DESARROLLO
+# ========================================
+
+FROM node:18-alpine
+
+# Instalar Angular CLI globalmente
+RUN npm install -g @angular/cli
+
+# Establecer directorio de trabajo
+WORKDIR /app
+
+# Copiar archivos de dependencias
+COPY package*.json ./
+
+# Instalar todas las dependencias (incluyendo dev)
+RUN npm install
+
+# Copiar script de inicialización
+COPY docker-entrypoint-dev.sh /docker-entrypoint-dev.sh
+
+# Hacer el script ejecutable
+RUN chmod +x /docker-entrypoint-dev.sh
+
+# Exponer puerto 4200 (puerto por defecto de Angular dev server)
+EXPOSE 4200
+
+# Variables de entorno para desarrollo
+ENV NODE_ENV=development
+
+# Usar el script de inicialización como entrypoint
+ENTRYPOINT ["/docker-entrypoint-dev.sh"]
+
+# Comando para desarrollo con hot reload
+# --host 0.0.0.0 permite acceso desde fuera del contenedor
+# --poll 2000 mejora la detección de cambios en Docker
+CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200", "--poll", "2000"]

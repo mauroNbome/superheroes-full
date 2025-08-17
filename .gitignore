@@ -1,0 +1,36 @@
+# OS / Editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.history/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Node (ambos proyectos)
+**/node_modules/
+**/dist/
+**/coverage/
+**/.cache/
+**/tmp/
+**/.eslintcache
+**/.nyc_output
+**/*.tsbuildinfo
+
+# Angular
+superheroes-app/.angular/
+
+# Nest / DB
+superheroes-back/superheroes.db
+
+# Env files (no subir secretos)
+.env
+*.env
+*.env.local
+
+# Docker (archivos generados)
+docker-data/

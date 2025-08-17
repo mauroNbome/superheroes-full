@@ -1,0 +1,149 @@
+<div class="hero-detail-container">
+  <!-- Loading State -->
+  <ng-container *ngIf="loading">
+    <div class="loading-container">
+      <mat-progress-spinner mode="indeterminate" diameter="48"></mat-progress-spinner>
+      <p>Cargando héroe...</p>
+    </div>
+  </ng-container>
+
+  <!-- Error / Empty State -->
+  <ng-container *ngIf="!loading && !hero">
+    <mat-card class="error-card">
+      <div class="error-content">
+        <mat-icon class="error-icon">report_problem</mat-icon>
+        <h3>Héroe no encontrado</h3>
+        <p>El héroe solicitado no existe o no se pudo cargar.</p>
+        <button mat-stroked-button color="primary" (click)="navigateBack()">
+          <mat-icon>arrow_back</mat-icon>
+          Volver
+        </button>
+      </div>
+    </mat-card>
+  </ng-container>
+
+  <!-- Content -->
+  <ng-container *ngIf="!loading && hero as h">
+    <mat-card class="hero-card">
+      <!-- Header -->
+      <div class="hero-header">
+        <div class="hero-avatar">
+          <img *ngIf="h.imageUrl; else defaultAvatar" [src]="h.imageUrl" (error)="onImageError($event)" alt="avatar" width="80" height="80" />
+          <ng-template #defaultAvatar>
+            <mat-icon>shield</mat-icon>
+          </ng-template>
+        </div>
+
+        <div class="hero-info">
+          <h2 class="hero-name">{{ h.alias || h.name }}</h2>
+          <p class="hero-alter-ego" *ngIf="h.alias && h.name">{{ h.name }}</p>
+
+          <div [ngClass]="heroStatusClass">
+            <mat-chip-set>
+              <mat-chip selected [color]="getStatusColor(h.isActive)">
+                <mat-icon>{{ heroStatusIcon }}</mat-icon>
+                {{ heroStatusText }}
+              </mat-chip>
+              <mat-chip>
+                <mat-icon>bolt</mat-icon>
+                Nivel {{ h.powerLevel }}
+              </mat-chip>
+              <mat-chip *ngIf="h.city">
+                <mat-icon>location_city</mat-icon>
+                {{ h.city }}
+              </mat-chip>
+            </mat-chip-set>
+          </div>
+        </div>
+      </div>
+
+      <!-- Details -->
+      <div class="hero-details">
+        <div class="detail-section">
+          <div class="detail-header">
+            <mat-icon class="section-icon">info</mat-icon>
+            <h3>Descripción</h3>
+          </div>
+          <p class="detail-content">{{ h.description || 'Sin descripción disponible' }}</p>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-section">
+          <div class="detail-header">
+            <mat-icon class="section-icon">bolt</mat-icon>
+            <h3>Poderes</h3>
+          </div>
+          <div class="detail-content">
+            <mat-chip-set *ngIf="h.powers.length; else noPowers">
+              <mat-chip *ngFor="let power of h.powers">{{ power }}</mat-chip>
+            </mat-chip-set>
+            <ng-template #noPowers>
+              <span>Sin poderes registrados</span>
+            </ng-template>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-section">
+          <div class="detail-header">
+            <mat-icon class="section-icon">insights</mat-icon>
+            <h3>Información</h3>
+          </div>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Estado</span>
+              <span class="info-value">{{ heroStatusText }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Nivel de poder</span>
+              <span class="info-value">{{ h.powerLevel }} ({{ h.powerLevelDescription }})</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Cantidad de poderes</span>
+              <span class="info-value">{{ h.powerCount }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Ciudad</span>
+              <span class="info-value">{{ h.city || '—' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Creado</span>
+              <span class="info-value">{{ formatDate(h.createdAt) }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Actualizado</span>
+              <span class="info-value">{{ formatDate(h.updatedAt) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Actions -->
+        <div class="action-section">
+          <div class="action-buttons">
+            <button class="back-btn" mat-stroked-button color="primary" (click)="navigateBack()">
+              <mat-icon>arrow_back</mat-icon>
+              Volver
+            </button>
+
+            <div class="primary-actions">
+              <button mat-flat-button color="primary" (click)="editHero()">
+                <mat-icon>edit</mat-icon>
+                Editar
+              </button>
+              <button mat-stroked-button color="warn" (click)="deleteHero()">
+                <mat-icon>delete</mat-icon>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </ng-container>
+</div>
+
+

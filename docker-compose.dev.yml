@@ -1,0 +1,71 @@
+version: '3.8'
+
+# Configuración simplificada para DESARROLLO
+# Usa SQLite (sin servicio de BD separado)
+services:
+  # ========================================
+  # BACKEND - API NestJS (Desarrollo)
+  # ========================================
+  backend-dev:
+    build:
+      context: ./superheroes-back
+      dockerfile: Dockerfile.dev
+    container_name: superheroes-api-dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      # SQLite (sin BD externa)
+      DB_TYPE: sqlite
+      DB_DATABASE: superheroes.db
+      # CORS - Permitir frontend desde Docker y localhost
+      CORS_ORIGIN: "http://localhost:4200,http://frontend-dev:80"
+    networks:
+      - superheroes-dev-network
+    volumes:
+      # Hot reload para desarrollo
+      - ./superheroes-back:/app
+      - /app/node_modules  # Evitar conflictos con node_modules
+      # Persistir la BD SQLite fuera del contenedor
+      - sqlite_data:/app/database
+
+  # ========================================
+  # FRONTEND - Angular (Desarrollo)
+  # ========================================
+  frontend-dev:
+    build:
+      context: ./superheroes-app
+      dockerfile: Dockerfile.dev
+    container_name: superheroes-frontend-dev
+    restart: unless-stopped
+    ports:
+      - "4200:4200"
+    environment:
+      # En Docker, usa el nombre del servicio backend
+      API_URL: http://backend-dev:3000
+      # Variable para indicar que está en Docker
+      DOCKER_ENV: "true"
+    depends_on:
+      - backend-dev
+    networks:
+      - superheroes-dev-network
+    volumes:
+      # Hot reload para desarrollo
+      - ./superheroes-app:/app
+      - /app/node_modules
+
+# ========================================
+# VOLÚMENES PARA DESARROLLO
+# ========================================
+volumes:
+  sqlite_data:
+    driver: local
+
+# ========================================
+# RED PARA DESARROLLO
+# ========================================
+networks:
+  superheroes-dev-network:
+    driver: bridge

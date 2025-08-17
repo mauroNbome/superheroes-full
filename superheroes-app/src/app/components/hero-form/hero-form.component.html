@@ -1,0 +1,280 @@
+<!-- Hero Form Dialog Header -->
+<div class="dialog-header">
+  <div class="header-left">
+    <h2 mat-dialog-title class="dialog-title">{{ dialogTitle }}</h2>
+  </div>
+  
+  <!-- Close dialog button -->
+  <button 
+    mat-icon-button 
+    class="close-button"
+    (click)="onCancel()"
+    aria-label="Close dialog">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<!-- Hero Form Content -->
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="heroForm" (ngSubmit)="onSubmit()" class="hero-form">
+    
+    <!-- Hero Name Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Hero Name</mat-label>
+      <input 
+        matInput
+        formControlName="name"
+        placeholder="e.g. Superman, Batman, Wonder Woman"
+        maxlength="50"
+        autocomplete="off"
+        appUppercase>
+      <mat-icon matSuffix>person</mat-icon>
+      
+      <!-- Character counter -->
+      <mat-hint align="end">
+        {{ heroForm.get('name')?.value?.length || 0 }}/50
+      </mat-hint>
+      
+      <!-- Validation error messages -->
+      <mat-error *ngIf="hasFieldError('name')">
+        {{ getFieldErrorMessage('name') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Hero Alias Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Hero Alias</mat-label>
+      <input 
+        matInput
+        formControlName="alias"
+        placeholder="e.g. Clark Kent, Bruce Wayne, Diana Prince"
+        maxlength="50"
+        autocomplete="off">
+      <mat-icon matSuffix>account_circle</mat-icon>
+      
+      <!-- Character counter -->
+      <mat-hint align="end">
+        {{ heroForm.get('alias')?.value?.length || 0 }}/50
+      </mat-hint>
+      
+      <!-- Validation error messages -->
+      <mat-error *ngIf="hasFieldError('alias')">
+        {{ getFieldErrorMessage('alias') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- City Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>City</mat-label>
+      <input 
+        matInput
+        formControlName="city"
+        placeholder="e.g. Metropolis, Gotham City, Themyscira"
+        maxlength="50"
+        autocomplete="off">
+      <mat-icon matSuffix>location_city</mat-icon>
+      
+      <!-- Character counter -->
+      <mat-hint align="end">
+        {{ heroForm.get('city')?.value?.length || 0 }}/50
+      </mat-hint>
+      
+      <!-- Validation error messages -->
+      <mat-error *ngIf="hasFieldError('city')">
+        {{ getFieldErrorMessage('city') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Powers Field (with chip list) -->
+    <div class="powers-section">
+      <label class="powers-label">Powers *</label>
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Add Power</mat-label>
+        <input 
+          matInput
+          #powerInput
+          placeholder="Type power and press Enter"
+          (keydown.enter)="addPowerFromInput(powerInput)"
+          autocomplete="off">
+        <mat-icon matSuffix>flash_on</mat-icon>
+        <mat-hint>Press Enter to add powers. Max {{ FORM_LIMITS.powers.arrayMax }} powers.</mat-hint>
+      </mat-form-field>
+      
+      <div class="powers-chips-container" *ngIf="heroForm.get('powers')?.value?.length > 0">
+        <mat-chip-set>
+          <mat-chip 
+            *ngFor="let power of heroForm.get('powers')?.value; let i = index"
+            [removable]="true"
+            (removed)="removePower(i)">
+            {{ power }}
+            <button matChipRemove [attr.aria-label]="'Remove ' + power">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-set>
+      </div>
+      
+      <!-- Validation error messages -->
+      <div class="powers-error" *ngIf="hasFieldError('powers')">
+        <mat-error>{{ getFieldErrorMessage('powers') }}</mat-error>
+      </div>
+    </div>
+
+    <!-- Power Level Field -->
+    <div class="power-level-section">
+      <label class="power-level-label">Power Level *</label>
+      
+      <div class="power-level-container">
+        <input 
+          type="range" 
+          formControlName="powerLevel"
+          min="1" 
+          max="10" 
+          step="1"
+          class="power-level-slider">
+        
+        <div class="power-level-display">
+          <mat-chip [color]="getPowerLevelColor(heroForm.get('powerLevel')?.value || 1)" class="power-level-chip">
+            {{ heroForm.get('powerLevel')?.value || 1 }}/10
+          </mat-chip>
+          <span class="power-level-description">
+            {{ getPowerLevelDescription(heroForm.get('powerLevel')?.value || 1) }}
+          </span>
+        </div>
+      </div>
+      
+      <!-- Validation error messages -->
+      <div class="power-level-error" *ngIf="hasFieldError('powerLevel')">
+        <mat-error>{{ getFieldErrorMessage('powerLevel') }}</mat-error>
+      </div>
+    </div>
+
+    <!-- Description Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea 
+        matInput
+        formControlName="description"
+        placeholder="Describe the hero's background, origin, or special characteristics"
+        maxlength="500"
+        rows="4"
+        autocomplete="off">
+      </textarea>
+      <mat-icon matSuffix>description</mat-icon>
+      
+      <!-- Character counter -->
+      <mat-hint align="end">
+        {{ heroForm.get('description')?.value?.length || 0 }}/500
+      </mat-hint>
+      
+      <!-- Validation error messages -->
+      <mat-error *ngIf="hasFieldError('description')">
+        {{ getFieldErrorMessage('description') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Image URL Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Image URL (Optional)</mat-label>
+      <input 
+        matInput
+        formControlName="imageUrl"
+        placeholder="https://example.com/hero-image.jpg"
+        maxlength="500"
+        autocomplete="off">
+      <mat-icon matSuffix>image</mat-icon>
+      
+      <!-- Character counter -->
+      <mat-hint align="end">
+        {{ heroForm.get('imageUrl')?.value?.length || 0 }}/500
+      </mat-hint>
+      
+      <!-- Validation error messages -->
+      <mat-error *ngIf="hasFieldError('imageUrl')">
+        {{ getFieldErrorMessage('imageUrl') }}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Active Status Toggle -->
+    <div class="form-row">
+      <mat-slide-toggle 
+        formControlName="isActive"
+        color="primary"
+        class="status-toggle">
+        <span class="toggle-label">
+          <mat-icon class="toggle-icon">
+            {{ heroForm.get('isActive')?.value ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+          {{ heroForm.get('isActive')?.value ? 'Hero Active' : 'Hero Inactive' }}
+        </span>
+      </mat-slide-toggle>
+    </div>
+
+    <!-- Edit Mode Info (Read-only fields) -->
+    <div *ngIf="isEditMode && data.hero" class="edit-info">
+      <mat-divider></mat-divider>
+      <h4>Hero Information</h4>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Created:</span>
+          <span class="info-value">{{ formatDate(data.hero.createdAt) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Last Updated:</span>
+          <span class="info-value">{{ formatDate(data.hero.updatedAt) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Power Count:</span>
+          <span class="info-value">{{ data.hero.powerCount }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Power Level:</span>
+          <span class="info-value">{{ data.hero.powerLevelDescription }}</span>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<!-- Dialog Action Buttons -->
+<mat-dialog-actions class="dialog-actions">
+  <div class="actions-container">
+    
+    <!-- Cancel Button -->
+    <button 
+      mat-stroked-button
+      type="button"
+      (click)="onCancel()"
+      [disabled]="isLoading"
+      class="cancel-button">
+      Cancel
+    </button>
+
+    <!-- Primary Action Button -->
+    <button 
+      mat-raised-button
+      color="primary"
+      type="submit"
+      (click)="onSubmit()"
+      [disabled]="!heroForm.valid || isLoading"
+      class="action-button">
+      
+      <!-- Loading spinner during operations -->
+      <mat-spinner 
+        *ngIf="isLoading" 
+        diameter="20" 
+        class="button-spinner">
+      </mat-spinner>
+      
+      <!-- Button icon and text -->
+      <ng-container *ngIf="!isLoading">
+        <mat-icon>{{ isEditMode ? 'save' : 'add' }}</mat-icon>
+        {{ actionButtonText }}
+      </ng-container>
+    </button>
+
+  </div>
+</mat-dialog-actions>
